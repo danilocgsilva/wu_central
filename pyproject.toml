@@ -1,0 +1,14 @@
+[project]
+name = "wu-central"
+version = "0.1.0"
+
+dependencies = [
+    "programatic-x",
+    "programatic-x @ git+https://github.com/danilocgsilva/programatic-x.git",
+]
+
+[tool.setuptools.packages.find]
+exclude = [
+    "build*",
+    "wu_central.egg-info/*"
+]
