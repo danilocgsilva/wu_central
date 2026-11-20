@@ -1,0 +1,5 @@
+^\\.vscode\\settings.json
+^\\build
+^\\.git
+^\\.app-string-ignore
+^\\wu_central.egg-info
