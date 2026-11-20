@@ -1,4 +1,4 @@
 from wu_central.WuCentral import WuCentral
 
 wucentral = WuCentral()
-wucentral.openWhatsUp(3, 3)
+wucentral.openWhatsUp(3, 2)
