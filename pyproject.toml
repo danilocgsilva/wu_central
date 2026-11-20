@@ -1,6 +1,6 @@
 [project]
 name = "wu-central"
-version = "1.0.1"
+version = "1.0.2"
 
 dependencies = [
     "programatic-x",
@@ -12,3 +12,6 @@ exclude = [
     "build*",
     "wu_central.egg-info/*"
 ]
+
+[tool.setuptools.package-data]
+wu_central = ["assets/*.png"]
