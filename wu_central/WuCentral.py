@@ -23,5 +23,8 @@ class WuCentral(WuCentralInterface):
         long_type.type("whatsapp", character_interval_typing_ms)
         sleep(await_accept)
         pyautogui.press("enter")
+
+    def openWhatsUpAuto(self):
+        self.openWhatsUp(3, 1, 1, 100)
         
         
