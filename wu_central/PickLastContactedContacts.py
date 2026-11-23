@@ -18,12 +18,21 @@ class PickLastContactedContacts:
         ]
 
         confidence = 0.6
+        image_instance = Image()
         for icon_imagem_string, scale in wu_images:
-            try:
-                print(f"Trying: {icon_imagem_string}")
-                x, y = Image.get_center(icon_imagem_string, confidence, "wu_central", "assets")
-                return x, y, scale
-            except pyautogui.ImageNotFoundException:
-                continue
-        raise Exception("WhatsApp window icon not found.")
+            # try:
+            #     print(f"Trying: {icon_imagem_string}")
+            #     x, y = Image.get_center(icon_imagem_string, confidence, "wu_central", "assets")
+            #     return x, y, scale
+            # except pyautogui.ImageNotFoundException:
+            #     continue
+            
+        # raise Exception("WhatsApp window icon not found.")
+            print("---")
+            image_instance.compare(icon_imagem_string, "wu_central", "assets")
+            print(icon_imagem_string)
+            print(image_instance.max_val)
+            print(image_instance.max_loc)
+            pyautogui.moveTo(image_instance.max_loc[0], image_instance.max_loc[1], 1)
+            
 
