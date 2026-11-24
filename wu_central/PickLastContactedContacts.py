@@ -3,13 +3,7 @@ import pyautogui
 
 class PickLastContactedContacts:
     def pick(self, lasting_contact_name: str):
-        # Lets see the upper left corner of the desktop window, so we can
-        # calculate where to start to pick search for last contacts
-        x, y, scale = self._getImageIconWindowCenter()
-        print(f"Position x: {x}")
-        print(f"Position y: {y}")
-        print(f"Scale: {scale}")
-        return x, y
+        self._getImageIconWindowCenter()
 
     def _getImageIconWindowCenter(self):
         wu_images = [
@@ -17,22 +11,14 @@ class PickLastContactedContacts:
             ("WhatsApp_1x_window_icon.png", 100)
         ]
 
-        confidence = 0.6
+        confidence = 0.8
         image_instance = Image()
         for icon_imagem_string, scale in wu_images:
-            # try:
-            #     print(f"Trying: {icon_imagem_string}")
-            #     x, y = Image.get_center(icon_imagem_string, confidence, "wu_central", "assets")
-            #     return x, y, scale
-            # except pyautogui.ImageNotFoundException:
-            #     continue
-            
-        # raise Exception("WhatsApp window icon not found.")
             print("---")
-            image_instance.compare(icon_imagem_string, "wu_central", "assets")
-            print(icon_imagem_string)
-            print(image_instance.max_val)
-            print(image_instance.max_loc)
-            pyautogui.moveTo(image_instance.max_loc[0], image_instance.max_loc[1], 1)
+            centers = image_instance.get_centers(icon_imagem_string, confidence, "wu_central", "assets")
+            print(centers)
+            for center in centers:
+                print(center)
+                pyautogui.moveTo(center[0], center[1], 1)
             
 
