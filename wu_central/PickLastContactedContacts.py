@@ -1,6 +1,7 @@
 from programatic_x.Image import Image
 import pyautogui
-
+from typing import Dict, List
+from programatic_x.named_tuples.Coordinate import Coordinate
 class PickLastContactedContacts:
     def pick(self, lasting_contact_name: str):
         centers = self._getImageIconWindowCenter()
@@ -9,9 +10,9 @@ class PickLastContactedContacts:
             print(f"--- {image_name} ---")
             for center in coordinates:
                 print(center)
-                pyautogui.moveTo(center[0], center[1], 1)
+                pyautogui.moveTo(center.x, center.y, 1)
 
-    def _getImageIconWindowCenter(self) -> dict[str, list[tuple[int, int]]]:
+    def _getImageIconWindowCenter(self) -> Dict[str, list[Coordinate]]:
         wu_images = [
             ("WhatsApp_1.5x_window_icon.png", 150),
             ("WhatsApp_dark_1.5x_window_icon.png", 150),
