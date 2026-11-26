@@ -4,7 +4,6 @@ import pyautogui
 class PickLastContactedContacts:
     def pick(self, lasting_contact_name: str):
         centers = self._getImageIconWindowCenter()
-        print(centers)
         
         for image_name, coordinates in centers.items():
             print(f"--- {image_name} ---")
@@ -34,12 +33,13 @@ class PickLastContactedContacts:
             image_name = icon_imagem_string.split('.')[0]
             results[image_name] = centers
             
-            print(f"@{icon_imagem_string}")
             dimensions = image_instance.get_dimensions()
-            print(dimensions)
         
-        # print("here")
-            
         return results
             
-
+    def _moveToFirstContact(self, scale: float, center_origin_position: tuple):
+        move_x = 87 * scale
+        move_y = 216 * scale
+        new_x_position = center_origin_position[0] + move_x
+        new_y_position = center_origin_position[1] + move_y
+        pyautogui.moveTo(new_x_position, new_y_position, 1)
