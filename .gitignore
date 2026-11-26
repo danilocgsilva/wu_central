@@ -1,3 +1,4 @@
 wu_central.egg-info/*
 build/*
 wu_central/__pycache__/*
+wu_central/interfaces/__pycache__/*
