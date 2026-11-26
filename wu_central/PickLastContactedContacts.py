@@ -2,17 +2,20 @@ from programatic_x.Image import Image
 import pyautogui
 from typing import Dict, List
 from programatic_x.named_tuples.Coordinate import Coordinate
+from programatic_x.named_tuples.XYsize import XYsize
+
 class PickLastContactedContacts:
     def pick(self, lasting_contact_name: str):
-        centers = self._getImageIconWindowCenter()
+        centers_and_sizes = self._getImageIconWindowCenter()
+        print(centers_and_sizes)
         
-        for image_name, coordinates in centers.items():
+        for image_name, (coordinates, _) in centers_and_sizes.items():
             print(f"--- {image_name} ---")
             for center in coordinates:
                 print(center)
-                pyautogui.moveTo(center.x, center.y, 1)
+                pyautogui.moveTo(center[0], center[1], 1)
 
-    def _getImageIconWindowCenter(self) -> Dict[str, list[Coordinate]]:
+    def _getImageIconWindowCenter(self) -> Dict[str, tuple[List[Coordinate], List[XYsize]]]:
         wu_images = [
             ("WhatsApp_1.5x_window_icon.png", 150),
             ("WhatsApp_dark_1.5x_window_icon.png", 150),
@@ -22,7 +25,7 @@ class PickLastContactedContacts:
 
         confidence = 0.9
         image_instance = Image()
-        results = {}
+        results: Dict[str, tuple[List[Coordinate], List[XYsize]]] = {}
         
         for icon_imagem_string, scale in wu_images:
             centers = image_instance.get_centers(
@@ -32,9 +35,8 @@ class PickLastContactedContacts:
                 "assets"
             )
             image_name = icon_imagem_string.split('.')[0]
-            results[image_name] = centers
-            
             dimensions = image_instance.get_dimensions()
+            results[image_name] = (centers, dimensions)
         
         return results
             
