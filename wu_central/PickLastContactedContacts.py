@@ -11,7 +11,7 @@ class PickLastContactedContacts:
                 print(center)
                 pyautogui.moveTo(center[0], center[1], 1)
 
-    def _getImageIconWindowCenter(self):
+    def _getImageIconWindowCenter(self) -> dict[str, list[tuple[int, int]]]:
         wu_images = [
             ("WhatsApp_1.5x_window_icon.png", 150),
             ("WhatsApp_dark_1.5x_window_icon.png", 150),
