@@ -4,3 +4,4 @@ wu_central/__pycache__/*
 wu_central/interfaces/__pycache__/*
 print_screens/*
 wu_central/enums/__pycache__/*
+wu_central/typed_dict/__pycache__/*

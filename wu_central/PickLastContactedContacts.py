@@ -6,6 +6,7 @@ from typing import Dict, List
 from programatic_x.named_tuples.Coordinate import Coordinate
 from programatic_x.named_tuples.XYsize import XYsize
 from wu_central.enums.MovingTemplate import MovingTemplate
+from wu_central.typed_dict.Template import Template
 
 class PickLastContactedContacts:
     def pick(self, lasting_contact_name: str):
@@ -19,19 +20,42 @@ class PickLastContactedContacts:
         scale = center_size_scale[2]
         center_found = center_size_scale[0]
 
-        center_to_first_contact = self._moveToFirstContact(scale, center_found)
-
-        print("-=-")
-        print(center_to_first_contact.x)
-        print(center_to_first_contact.y)
-        print("-=-")
+        template = MovingTemplate.WITH_LOCKED_AND_ARCHIVED.value
+        center_to_first_contact = self._moveToFirstContact(scale, center_found, template)
 
         self._contactPrintScreen(
             center_to_first_contact,
-            60,
-            40,
-            180,
-            40
+            template
+        )
+
+        next_center = Coordinate(
+            x=center_to_first_contact.x, 
+            y=center_to_first_contact.y + 80
+        )
+
+        self._contactPrintScreen(
+            next_center,
+            template
+        )
+
+        next_center = Coordinate(
+            x=next_center.x, 
+            y=next_center.y + 80
+        )
+
+        self._contactPrintScreen(
+            next_center,
+            template
+        )
+
+        next_center = Coordinate(
+            x=next_center.x, 
+            y=next_center.y + 80
+        )
+
+        self._contactPrintScreen(
+            next_center,
+            template
         )
         
     def _getImageIconWindowCenter(
@@ -76,13 +100,14 @@ class PickLastContactedContacts:
             if coordinates and dimensions
         }
             
-    def _moveToFirstContact(self, scale: float, center_origin_position: Coordinate) -> Coordinate:
-        template = MovingTemplate.SLIM.value
-        
-        print(template)
-        
-        move_x = template[0] * scale
-        move_y = template[1] * scale
+    def _moveToFirstContact(
+        self, 
+        scale: float, 
+        center_origin_position: Coordinate, 
+        template_value: Template
+    ) -> Coordinate:        
+        move_x = template_value["center_reference"][0] * scale
+        move_y = template_value["center_reference"][1] * scale
 
         new_x_position = center_origin_position.x + move_x
         new_y_position = center_origin_position.y + move_y
@@ -93,15 +118,24 @@ class PickLastContactedContacts:
     def _contactPrintScreen(
             self, 
             center: Coordinate,
-            to_left: int = 60,
-            to_top: int = 40,
-            to_right: int = 60,
-            to_bottom: int = 40
+            template: Template
         ) -> Path:
         print_screens_path = Path("print_screens")
         print_screens_path.mkdir(exist_ok=True)
 
-        screenshot_path = print_screens_path / f"{datetime.now():%Y%m%d-%H%M%S}.png"
+        to_left = template["move_all_directions"]["to_left"]
+        to_top = template["move_all_directions"]["to_up"]
+        to_right = template["move_all_directions"]["to_right"]
+        to_bottom = template["move_all_directions"]["to_bottom"]
+
+        timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        screenshot_path = print_screens_path / f"{timestamp}.png"
+        suffix = 1
+        while screenshot_path.exists():
+            screenshot_path = print_screens_path / f"{timestamp}-{suffix:03d}.png"
+            suffix += 1
+
         region = (int(center.x - to_left), int(center.y - to_top), to_left + to_right, to_top + to_bottom)
         pyautogui.screenshot(region=region).save(screenshot_path)
+        print(f"Screenshot saved to: {screenshot_path}")
         return screenshot_path
