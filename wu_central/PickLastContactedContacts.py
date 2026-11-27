@@ -7,6 +7,7 @@ from programatic_x.named_tuples.Coordinate import Coordinate
 from programatic_x.named_tuples.XYsize import XYsize
 from wu_central.enums.MovingTemplate import MovingTemplate
 from wu_central.typed_dict.Template import Template
+from wu_central.ScreenHint import ScreenHint
 
 class PickLastContactedContacts:
     def pick(self, lasting_contact_name: str):
@@ -111,6 +112,7 @@ class PickLastContactedContacts:
             suffix += 1
 
         region = (int(center.x - to_left), int(center.y - to_top), to_left + to_right, to_top + to_bottom)
+        ScreenHint.showCaptureRegion(region)
         pyautogui.screenshot(region=region).save(screenshot_path)
         print(f"Screenshot saved to: {screenshot_path}")
         return screenshot_path
