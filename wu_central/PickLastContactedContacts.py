@@ -23,40 +23,12 @@ class PickLastContactedContacts:
         template = MovingTemplate.WITH_LOCKED_AND_ARCHIVED.value
         center_to_first_contact = self._moveToFirstContact(scale, center_found, template)
 
-        self._contactPrintScreen(
-            center_to_first_contact,
-            template
-        )
-
-        next_center = Coordinate(
-            x=center_to_first_contact.x, 
-            y=center_to_first_contact.y + 80
-        )
-
-        self._contactPrintScreen(
-            next_center,
-            template
-        )
-
-        next_center = Coordinate(
-            x=next_center.x, 
-            y=next_center.y + 80
-        )
-
-        self._contactPrintScreen(
-            next_center,
-            template
-        )
-
-        next_center = Coordinate(
-            x=next_center.x, 
-            y=next_center.y + 80
-        )
-
-        self._contactPrintScreen(
-            next_center,
-            template
-        )
+        for contact_index in range(4):
+            contact_center = Coordinate(
+                x=center_to_first_contact.x,
+                y=center_to_first_contact.y + contact_index * 76
+            )
+            self._contactPrintScreen(contact_center, template)
         
     def _getImageIconWindowCenter(
         self
@@ -120,6 +92,9 @@ class PickLastContactedContacts:
             center: Coordinate,
             template: Template
         ) -> Path:
+
+        pyautogui.moveTo(center.x, center.y, 0.5)
+        
         print_screens_path = Path("print_screens")
         print_screens_path.mkdir(exist_ok=True)
 
