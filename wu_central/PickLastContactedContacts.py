@@ -5,10 +5,12 @@ from pathlib import Path
 from typing import Dict, List
 from programatic_x.named_tuples.Coordinate import Coordinate
 from programatic_x.named_tuples.XYsize import XYsize
+from wu_central.enums.MovingTemplate import MovingTemplate
 
 class PickLastContactedContacts:
     def pick(self, lasting_contact_name: str):
         centers_and_sizes = self._getImageIconWindowCenter()
+        print(centers_and_sizes)
         valid_center_size = self._filterImageIconWindowCenter(centers_and_sizes)
 
         if not valid_center_size:
@@ -39,7 +41,8 @@ class PickLastContactedContacts:
             ("WhatsApp_1.5x_window_icon.png", 1.5),
             ("WhatsApp_dark_1.5x_window_icon.png", 1.5),
             ("WhatsApp_1x_window_icon.png", 1.0),
-            ("wu_web_dark_1x.png", 1.0)
+            ("wu_web_dark_1x.png", 1.0),
+            ("wu_web_dark_poured_1x.png", 1.0)
         ]
 
         confidence = 0.9
@@ -74,9 +77,10 @@ class PickLastContactedContacts:
         }
             
     def _moveToFirstContact(self, scale: float, center_origin_position: Coordinate) -> Coordinate:
-        template_1 = (87, 216)
-        template_2 = (87, 335)
-        template = template_2
+        template = MovingTemplate.SLIM.value
+        
+        print(template)
+        
         move_x = template[0] * scale
         move_y = template[1] * scale
 
