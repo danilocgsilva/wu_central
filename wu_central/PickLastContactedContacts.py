@@ -21,7 +21,8 @@ class PickLastContactedContacts:
         scale = center_size_scale[2]
         center_found = center_size_scale[0]
 
-        template = MovingTemplate.WITH_LOCKED_AND_ARCHIVED.value
+        # template = MovingTemplate.WITH_LOCKED_AND_ARCHIVED.value
+        template = MovingTemplate.SLIM.value
         center_to_first_contact = self._moveToFirstContact(scale, center_found, template)
 
         for contact_index in range(4):
